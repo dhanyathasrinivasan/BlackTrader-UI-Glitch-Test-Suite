@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackTrader Widget Categorization & Lifecycle Test Report</title>
+    <style>
+        :root {
+            --bg-main: #0B0E14;
+            --bg-card: #151921;
+            --bg-hover: #1E232F;
+            --border-color: #262C3A;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --accent-blue: #3B82F6;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --accent-yellow: #F59E0B;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-primary); padding: 28px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .header h1 { font-size: 24px; font-weight: 700; color: #fff; }
+        .badge-tag { background: #1E293B; color: #38BDF8; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #0284C7; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; }
+        .kpi-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: #fff; }
+        .text-green { color: var(--accent-green) !important; }
+        .text-red { color: var(--accent-red) !important; }
+        .text-yellow { color: var(--accent-yellow) !important; }
+        .text-blue { color: var(--accent-blue) !important; }
+
+        .section-title { font-size: 18px; font-weight: 600; margin: 28px 0 14px 0; color: #E5E7EB; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 28px; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        th { background: #0E121A; color: var(--text-secondary); padding: 12px 14px; text-transform: uppercase; font-size: 11px; font-weight: 600; border-bottom: 1px solid var(--border-color); }
+        td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); vertical-align: top; }
+        tr:hover { background: var(--bg-hover); }
+
+        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .badge-pass { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-fail { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-warn { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .cat-tag { background: #1E293B; color: #94A3B8; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .widget-pill { background: #0E121A; border: 1px solid #262C3A; color: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin: 2px; display: inline-block; }
+
+        .screenshot-link { color: #38BDF8; text-decoration: none; font-weight: 600; }
+        .screenshot-link:hover { text-decoration: underline; }
+        code { background: #0E121A; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>BlackTrader Widget Categorization & Lifecycle Test Report</h1>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-top: 4px;">
+                Feature: <strong>Widget Picker Drawer (.tw-picker)</strong> | Viewport: <strong>1920x1080</strong> | Executed: <strong>2026-11-12T07:49:11.338Z</strong>
+            </p>
+        </div>
+        <div class="badge-tag">Full Verification Suite</div>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-title">Categories Verified</div>
+            <div class="kpi-value text-green">5 / 5</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Total Widgets Audited</div>
+            <div class="kpi-value text-blue">20</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Open & Close Passed</div>
+            <div class="kpi-value text-green">20</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Failed / Orphan Panes</div>
+            <div class="kpi-value text-green">0</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Console JS Errors</div>
+            <div class="kpi-value text-yellow">7</div>
+        </div>
+    </div>
+
+    <div class="section-title">1. Left Category Filter Verification Matrix</div>
+    <div class="card" style="padding: 0; overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th style="width: 140px;">Category</th>
+                    <th style="width: 90px;">Active State</th>
+                    <th style="width: 120px;">Widgets Count</th>
+                    <th>Rendered Widgets List</th>
+                    <th style="width: 100px;">Status</th>
+                    <th style="width: 160px;">Screenshot</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>#1</strong></td>
+                    <td><span class="cat-tag">All</span></td>
+                    <td><span class="badge badge-pass">Active (.on)</span></td>
+                    <td><strong>20</strong> (expected 20)</td>
+                    <td><span class="widget-pill">Watchlist</span> <span class="widget-pill">Chart</span> <span class="widget-pill">Trades</span> <span class="widget-pill">Coder</span> <span class="widget-pill">Algo</span> <span class="widget-pill">Backtest</span> <span class="widget-pill">Screener</span> <span class="widget-pill">Drawing Tools</span> <span class="widget-pill">Orders</span> <span class="widget-pill">Positions</span> <span class="widget-pill">Funds</span> <span class="widget-pill">Trade History</span> <span class="widget-pill">Trade Statistics</span> <span class="widget-pill">Logs</span> <span class="widget-pill">Copy trading</span> <span class="widget-pill">MAM</span> <span class="widget-pill">PAMM</span> <span class="widget-pill">Referrals</span> <span class="widget-pill">Wallet</span> <span class="widget-pill">Alerts</span></td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td><a href="../screenshots/cat_all.png" target="_blank" class="screenshot-link">📷 View Viewport</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#2</strong></td>
+                    <td><span class="cat-tag">Trading</span></td>
+                    <td><span class="badge badge-pass">Active (.on)</span></td>
+                    <td><strong>9</strong> (expected 9)</td>
+                    <td><span class="widget-pill">Watchlist</span> <span class="widget-pill">Chart</span> <span class="widget-pill">Trades</span> <span class="widget-pill">Coder</span> <span class="widget-pill">Algo</span> <span class="widget-pill">Backtest</span> <span class="widget-pill">Drawing Tools</span> <span class="widget-pill">Orders</span> <span class="widget-pill">Positions</span></td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td><a href="../screenshots/cat_trading.png" target="_blank" class="screenshot-link">📷 View Viewport</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#3</strong></td>
+                    <td><span class="cat-tag">Markets</span></td>
+                    <td><span class="badge badge-pass">Active (.on)</span></td>
+                    <td><strong>4</strong> (expected 4)</td>
+                    <td><span class="widget-pill">Screener</span> <span class="widget-pill">Funds</span> <span class="widget-pill">Trade History</span> <span class="widget-pill">Trade Statistics</span></td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td><a href="../screenshots/cat_markets.png" target="_blank" class="screenshot-link">📷 View Viewport</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#4</strong></td>
+                    <td><span class="cat-tag">Productivity</span></td>
+                    <td><span class="badge badge-pass">Active (.on)</span></td>
+                    <td><strong>2</strong> (expected 2)</td>
+                    <td><span class="widget-pill">Logs</span> <span class="widget-pill">Alerts</span></td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td><a href="../screenshots/cat_productivity.png" target="_blank" class="screenshot-link">📷 View Viewport</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#5</strong></td>
+                    <td><span class="cat-tag">Accounts</span></td>
+                    <td><span class="badge badge-pass">Active (.on)</span></td>
+                    <td><strong>5</strong> (expected 5)</td>
+                    <td><span class="widget-pill">Copy trading</span> <span class="widget-pill">MAM</span> <span class="widget-pill">PAMM</span> <span class="widget-pill">Referrals</span> <span class="widget-pill">Wallet</span></td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td><a href="../screenshots/cat_accounts.png" target="_blank" class="screenshot-link">📷 View Viewport</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-title">2. Complete Widget Open & Close Lifecycle Audit (20 Widgets)</div>
+    <div class="card" style="padding: 0; overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th style="width: 160px;">Widget Name</th>
+                    <th style="width: 150px;">Mount Type</th>
+                    <th style="width: 150px;">Open Lifecycle</th>
+                    <th style="width: 180px;">Close Lifecycle</th>
+                    <th style="width: 90px;">Status</th>
+                    <th>Observations & Remnant Check</th>
+                    <th style="width: 160px;">Screenshot</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>#1</strong></td>
+                    <td><strong>Watchlist</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1026ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_watchlist_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#2</strong></td>
+                    <td><strong>Chart</strong></td>
+                    <td><code>Single-Instance Canvas</code></td>
+                    <td>Pre-mounted & Protected</td>
+                    <td>Protected Core Window</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Enforces single-instance rule: "Chart is already open — one per workspace".</td>
+                    <td><a href="../screenshots/widget_chart_single_instance.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#3</strong></td>
+                    <td><strong>Trades</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1042ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_trades_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#4</strong></td>
+                    <td><strong>Coder</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1022ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_coder_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#5</strong></td>
+                    <td><strong>Algo</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1035ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_algo_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#6</strong></td>
+                    <td><strong>Backtest</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1028ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_backtest_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#7</strong></td>
+                    <td><strong>Screener</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1026ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_screener_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#8</strong></td>
+                    <td><strong>Drawing Tools</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1015ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_drawing_tools_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#9</strong></td>
+                    <td><strong>Orders</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1026ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_orders_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#10</strong></td>
+                    <td><strong>Positions</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1036ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_positions_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#11</strong></td>
+                    <td><strong>Funds</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1020ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_funds_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#12</strong></td>
+                    <td><strong>Trade History</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1023ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_trade_history_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#13</strong></td>
+                    <td><strong>Trade Statistics</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1028ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_trade_statistics_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#14</strong></td>
+                    <td><strong>Logs</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1032ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_logs_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#15</strong></td>
+                    <td><strong>Copy trading</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1024ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_copy_trading_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#16</strong></td>
+                    <td><strong>MAM</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1033ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_mam_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#17</strong></td>
+                    <td><strong>PAMM</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1025ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_pamm_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#18</strong></td>
+                    <td><strong>Referrals</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1026ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_referrals_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#19</strong></td>
+                    <td><strong>Wallet</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1025ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_wallet_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+                <tr>
+                    <td><strong>#20</strong></td>
+                    <td><strong>Alerts</strong></td>
+                    <td><code>Workspace Panel</code></td>
+                    <td>Mounted (1022ms)</td>
+                    <td>Closed via Close button (✕)</td>
+                    <td><span class="badge badge-pass">PASS</span></td>
+                    <td>Cleanly mounted as right workspace panel and unmounted with zero remnants.</td>
+                    <td><a href="../screenshots/widget_alerts_open.png" target="_blank" class="screenshot-link">📷 View Panel</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

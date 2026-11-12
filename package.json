@@ -1,0 +1,20 @@
+{
+  "name": "ui_test_suite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test_navigation_runner.js",
+    "test:nav": "node test_navigation_runner.js",
+    "test:widgets": "node test_widgets_runner.js",
+    "test:dragdrop": "node test_drag_drop_runner.js",
+    "test:all": "node test_navigation_runner.js && node test_widgets_runner.js && node test_drag_drop_runner.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer-core": "^25.17.0"
+  }
+}

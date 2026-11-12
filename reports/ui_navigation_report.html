@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackTrader UI Navigation & Button Test Report</title>
+    <style>
+        :root {
+            --bg-main: #0B0E14;
+            --bg-card: #151921;
+            --bg-hover: #1E232F;
+            --border-color: #262C3A;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --accent-blue: #3B82F6;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --accent-yellow: #F59E0B;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-primary); padding: 28px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .header h1 { font-size: 24px; font-weight: 700; color: #fff; }
+        .badge-tag { background: #1E293B; color: #38BDF8; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #0284C7; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; }
+        .kpi-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: #fff; }
+        .text-green { color: var(--accent-green) !important; }
+        .text-red { color: var(--accent-red) !important; }
+        .text-yellow { color: var(--accent-yellow) !important; }
+        .text-blue { color: var(--accent-blue) !important; }
+
+        .section-title { font-size: 18px; font-weight: 600; margin: 28px 0 14px 0; color: #E5E7EB; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 28px; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        th { background: #0E121A; color: var(--text-secondary); padding: 12px 14px; text-transform: uppercase; font-size: 11px; font-weight: 600; border-bottom: 1px solid var(--border-color); }
+        td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); }
+        tr:hover { background: var(--bg-hover); }
+
+        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .badge-pass { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-fail { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-warn { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .zone-badge { background: #1E293B; color: #94A3B8; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+
+        .screenshot-link { color: #38BDF8; text-decoration: none; font-weight: 600; }
+        .screenshot-link:hover { text-decoration: underline; }
+        code { background: #0E121A; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>BlackTrader UI Navigation & Button Test Report</h1>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-top: 4px;">
+                Platform: <strong>https://lpadmin.blackfx.com</strong> | Viewport: <strong>1920x1080</strong> | Mode: Headless Chrome
+            </p>
+        </div>
+        <div class="badge-tag">Automated Test Execution</div>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-title">Total Elements Tested</div>
+            <div class="kpi-value text-blue">21</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Passed Controls</div>
+            <div class="kpi-value text-green">21</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Failed / Dead Clicks</div>
+            <div class="kpi-value text-red">0</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Warnings / Latency</div>
+            <div class="kpi-value text-yellow">0</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-title">Console JS Errors</div>
+            <div class="kpi-value text-red">8</div>
+        </div>
+    </div>
+
+    <div class="section-title">Interactive Elements & Navigation Execution Log</div>
+    <div class="card" style="padding: 0; overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Zone</th>
+                    <th>Element Tested</th>
+                    <th>DOM Selector / Target</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Observation / Result</th>
+                    <th>Screenshot</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><strong>#1</strong></td>
+            <td><span class="zone-badge">Authentication</span></td>
+            <td><strong>BlackTrader Terminal Loaded</strong></td>
+            <td><code>iframe</code></td>
+            <td>Authenticate & Mount Terminal</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Trading terminal loaded with chart canvas, watchlist, and trades dock.</td>
+            <td><a href="../screenshots/01_terminal_workspace.png" target="_blank" class="screenshot-link">📷 View (01_terminal_workspace.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#2</strong></td>
+            <td><span class="zone-badge">Header Bar</span></td>
+            <td><strong>Account Selector Dropdown ("Default")</strong></td>
+            <td><code>div containing "Default"</code></td>
+            <td>Open account switcher menu</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Account dropdown menu displayed cleanly.</td>
+            <td><a href="../screenshots/02_account_dropdown.png" target="_blank" class="screenshot-link">📷 View (02_account_dropdown.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#3</strong></td>
+            <td><span class="zone-badge">Header Bar</span></td>
+            <td><strong>Add Widget Picker Button</strong></td>
+            <td><code>button[title="Add widget"]</code></td>
+            <td>Click Add Widget button to open widget drawer</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Widget drawer opened displaying workspace widgets (Watchlist, PAMM, Algo, etc.) and closed cleanly.</td>
+            <td><a href="../screenshots/02b_add_widget_drawer.png" target="_blank" class="screenshot-link">📷 View (02b_add_widget_drawer.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#4</strong></td>
+            <td><span class="zone-badge">Header Bar</span></td>
+            <td><strong>Profile Avatar Menu ("D")</strong></td>
+            <td><code>div containing "D"</code></td>
+            <td>Click user avatar icon</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Profile menu opened.</td>
+            <td><a href="../screenshots/03_profile_avatar_menu.png" target="_blank" class="screenshot-link">📷 View (03_profile_avatar_menu.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#5</strong></td>
+            <td><span class="zone-badge">Watchlist</span></td>
+            <td><strong>Watchlist Tabs (W1..W5)</strong></td>
+            <td><code>buttons containing W1..W5</code></td>
+            <td>Switch between watchlist presets</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Verified 13 watchlist tab presets.</td>
+            <td><a href="../screenshots/04_watchlist_tabs.png" target="_blank" class="screenshot-link">📷 View (04_watchlist_tabs.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#6</strong></td>
+            <td><span class="zone-badge">Watchlist</span></td>
+            <td><strong>Columns Customizer Dropdown</strong></td>
+            <td><code>button containing "Columns"</code></td>
+            <td>Toggle columns menu</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Columns dropdown menu opened and closed.</td>
+            <td><a href="../screenshots/05_watchlist_columns.png" target="_blank" class="screenshot-link">📷 View (05_watchlist_columns.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#7</strong></td>
+            <td><span class="zone-badge">Watchlist</span></td>
+            <td><strong>Sort Order Dropdown ("Original")</strong></td>
+            <td><code>button containing "Original"</code></td>
+            <td>Toggle sort order menu</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Sort options dropdown rendered properly.</td>
+            <td><a href="../screenshots/06_watchlist_sort.png" target="_blank" class="screenshot-link">📷 View (06_watchlist_sort.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#8</strong></td>
+            <td><span class="zone-badge">Watchlist</span></td>
+            <td><strong>Watchlist Note Button</strong></td>
+            <td><code>button containing "Note"</code></td>
+            <td>Open note drawer</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Note drawer opened cleanly.</td>
+            <td><a href="../screenshots/07_watchlist_note.png" target="_blank" class="screenshot-link">📷 View (07_watchlist_note.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#9</strong></td>
+            <td><span class="zone-badge">Workspace Tabs</span></td>
+            <td><strong>PAMM Workspace Tab</strong></td>
+            <td><code>div[role="tab"] containing "PAMM"</code></td>
+            <td>Switch to PAMM Manager & Followers Hub</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>PAMM hub displayed Master Alpha Pool and active follower list.</td>
+            <td><a href="../screenshots/08_pamm_workspace_view.png" target="_blank" class="screenshot-link">📷 View (08_pamm_workspace_view.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#10</strong></td>
+            <td><span class="zone-badge">Chart Toolbar</span></td>
+            <td><strong>Timeframe Dropdown ("1 Min")</strong></td>
+            <td><code>div containing "1 Min"</code></td>
+            <td>Open timeframe selection dropdown</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Timeframe dropdown opened (1m, 5m, 1h, 1D).</td>
+            <td><a href="../screenshots/09_timeframe_menu.png" target="_blank" class="screenshot-link">📷 View (09_timeframe_menu.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#11</strong></td>
+            <td><span class="zone-badge">Chart Toolbar</span></td>
+            <td><strong>Indicators Dialog Button</strong></td>
+            <td><code>div containing "Indicators"</code></td>
+            <td>Open technical indicators dialog</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Indicators dialog modal rendered cleanly.</td>
+            <td><a href="../screenshots/10_indicators_dialog.png" target="_blank" class="screenshot-link">📷 View (10_indicators_dialog.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#12</strong></td>
+            <td><span class="zone-badge">Bottom Trades Dock</span></td>
+            <td><strong>Dock Tab: [Positions]</strong></td>
+            <td><code>div containing "Positions"</code></td>
+            <td>Switch dock to Positions</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Dock switched to Positions view cleanly.</td>
+            <td><a href="../screenshots/11_dock_positions.png" target="_blank" class="screenshot-link">📷 View (11_dock_positions.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#13</strong></td>
+            <td><span class="zone-badge">Bottom Trades Dock</span></td>
+            <td><strong>Dock Tab: [Pending]</strong></td>
+            <td><code>div containing "Pending"</code></td>
+            <td>Switch dock to Pending</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Dock switched to Pending view cleanly.</td>
+            <td><a href="../screenshots/11_dock_pending.png" target="_blank" class="screenshot-link">📷 View (11_dock_pending.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#14</strong></td>
+            <td><span class="zone-badge">Bottom Trades Dock</span></td>
+            <td><strong>Dock Tab: [Orders]</strong></td>
+            <td><code>div containing "Orders"</code></td>
+            <td>Switch dock to Orders</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Dock switched to Orders view cleanly.</td>
+            <td><a href="../screenshots/11_dock_orders.png" target="_blank" class="screenshot-link">📷 View (11_dock_orders.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#15</strong></td>
+            <td><span class="zone-badge">Bottom Trades Dock</span></td>
+            <td><strong>Dock Tab: [History]</strong></td>
+            <td><code>div containing "History"</code></td>
+            <td>Switch dock to History</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Dock switched to History view cleanly.</td>
+            <td><a href="../screenshots/11_dock_history.png" target="_blank" class="screenshot-link">📷 View (11_dock_history.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#16</strong></td>
+            <td><span class="zone-badge">Bottom Trades Dock</span></td>
+            <td><strong>Dock Tab: [Funds]</strong></td>
+            <td><code>div containing "Funds"</code></td>
+            <td>Switch dock to Funds</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Dock switched to Funds view cleanly.</td>
+            <td><a href="../screenshots/11_dock_funds.png" target="_blank" class="screenshot-link">📷 View (11_dock_funds.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#17</strong></td>
+            <td><span class="zone-badge">History Filters</span></td>
+            <td><strong>Period Filter: [TODAY]</strong></td>
+            <td><code>button:has-text("TODAY")</code></td>
+            <td>Filter trade history by TODAY</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Filtered history by TODAY.</td>
+            <td><a href="../screenshots/12_history_filter_today.png" target="_blank" class="screenshot-link">📷 View (12_history_filter_today.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#18</strong></td>
+            <td><span class="zone-badge">History Filters</span></td>
+            <td><strong>Period Filter: [WEEK]</strong></td>
+            <td><code>button:has-text("WEEK")</code></td>
+            <td>Filter trade history by WEEK</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Filtered history by WEEK.</td>
+            <td><a href="../screenshots/12_history_filter_week.png" target="_blank" class="screenshot-link">📷 View (12_history_filter_week.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#19</strong></td>
+            <td><span class="zone-badge">History Filters</span></td>
+            <td><strong>Period Filter: [MONTH]</strong></td>
+            <td><code>button:has-text("MONTH")</code></td>
+            <td>Filter trade history by MONTH</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Filtered history by MONTH.</td>
+            <td><a href="../screenshots/12_history_filter_month.png" target="_blank" class="screenshot-link">📷 View (12_history_filter_month.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#20</strong></td>
+            <td><span class="zone-badge">History Filters</span></td>
+            <td><strong>Period Filter: [ALL]</strong></td>
+            <td><code>button:has-text("ALL")</code></td>
+            <td>Filter trade history by ALL</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Filtered history by ALL.</td>
+            <td><a href="../screenshots/12_history_filter_all.png" target="_blank" class="screenshot-link">📷 View (12_history_filter_all.png)</a></td>
+        </tr>
+        <tr>
+            <td><strong>#21</strong></td>
+            <td><span class="zone-badge">Admin Backoffice</span></td>
+            <td><strong>Admin Members Directory</strong></td>
+            <td><code>table or member list container</code></td>
+            <td>Inspect Admin Members View & Pagination</td>
+            <td><span class="badge badge-pass">PASS</span></td>
+            <td>Admin backoffice loaded with 350+ members and controls.</td>
+            <td><a href="../screenshots/13_admin_members_view.png" target="_blank" class="screenshot-link">📷 View (13_admin_members_view.png)</a></td>
+        </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-title">Browser Runtime Console Errors (8)</div>
+    <div class="card" style="padding: 0; overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th style="width: 120px;">Type</th>
+                    <th>Error Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>1</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Loading the script 'https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092' violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.</code></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Failed to load resource: the server responded with a status of 401 ()</code></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Failed to load resource: the server responded with a status of 404 ()</code></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Loading the script 'https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092' violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Failed to load resource: the server responded with a status of 404 ()</code></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Loading the script 'https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092' violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.</code></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Failed to load resource: the server responded with a status of 404 ()</code></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><span class="badge badge-fail">Console Error</span></td>
+                <td><code>Loading the script 'https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092' violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
